@@ -26,23 +26,25 @@ void Avion::tourner(float tang, float dir)
 	up=q2*osg::Vec3d(up);
 }
 
-static void Avion::DetecteCollision(int cube_size, &vector<Avion*> avions){
+static void Avion::DetecteCollision(int cube_size, std::vector<Avion*>& avions)
+{
+    using namespace std;
     vector<int> idem;
-    for (unsigned int i = 0, i<avions.size(), i++){//ici, on vérifie les murs et on compare les positions relatives (voir si deux sont ds le meme cube) 
-        pos1 = avions[i]->getPosition();
+    for (unsigned int i = 0; i<avions.size(); i++){//ici, on vérifie les murs et on compare les positions relatives (voir si deux sont ds le meme cube) 
+        osg::Vec3f pos1 = avions[i]->getPosition();
         if (pos1.x < 0 || pos1.x > cube_size || pos1.y < 0 || pos1.y > cube_size || pos1.z < 0 || pos1.z > cube_size ){
             idem.push_back(i);
         }
-        for (unsigned int j = i+1, j<avions.size(), j++){
-            pos2 = avions[j]->getPosition();
+        for (unsigned int j = i+1; j<avions.size(); j++){
+            osg::Vec3f pos2 = avions[j]->getPosition();
             if ((int)pos1.x == (int)pos2.x && (int)pos1.y == (int)pos2.y && (int)pos1.z == (int)pos2.z){
                 idem.push_back(i);
                 idem.push_back(j);
             }
         }
     }
-    for (unsigned int i = 0, i< idem.size-1, i++){//on trie la liste des index des avions à détruire dans l'ordre décroissant pour éviter les problèmes
-        for (unsigned int j = 0, j<idem.size-i,j++){//de chgment d'index lors de l'erase
+    for (unsigned int i = 0; i< idem.size-1; i++){//on trie la liste des index des avions à détruire dans l'ordre décroissant pour éviter les problèmes
+        for (unsigned int j = 0; j<idem.size-i;j++){//de chgment d'index lors de l'erase
             if (idem[j]<idem[j+1]){
                 int a = idem[j];
                 idem[j] = idem[j+1];
@@ -55,7 +57,7 @@ static void Avion::DetecteCollision(int cube_size, &vector<Avion*> avions){
         if (idem[i] != idem[i+1]){i++;}
         else{idem.erase(idem.begin()+i);}
     }
-    for (unsigned int i<idem.size()){//on efface
+    for (unsigned int i=0; i<idem.size(); i++){//on efface
         avions.erase(avions.begin()+idem[i]);
     }
 }
