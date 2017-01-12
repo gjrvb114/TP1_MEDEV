@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Avion.h"
+#include <vector>
 
-class avionJoueur : public Avion{
+class Joueur : public Avion{
 
 public:
-	avionJoueur(osg::Vec3f pos, osg::Vec3f dir);
-	~avionJoueur();
+	Joueur();
+	Joueur(osg::Vec3f pos, osg::Vec3f dir, int num);
+	~Joueur();
 
-	void avancer(int cube_size,&vector<avion*> avions, int i);
-	virtual void tourner(osg::Vec3f angle);
-
+	void avancer(int cube_size);
+	void strategie(std::vector<Avion*> &v);
 };

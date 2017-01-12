@@ -2,15 +2,15 @@
 
 #include "Avion.h"
 
-class avionEnnemi : public Avion{
+class Ennemi : public Avion{
 
 public:
-	avionEnnemi(osg::Vec3f pos, osg::Vec3f dir);
-	~avionEnnemi();
+	Ennemi();
+	Ennemi(osg::Vec3f pos, osg::Vec3f dir, int num);
+	~Ennemi();
 
-	bool getCamp(){return camp;};
-	void setCamp(bool _camp){ camp=_camp;};
-
-	void avancer(int cube_size,&vector<avion*> avions, int i);
-	virtual void tourner(osg::Vec3f angle);
+	void avancer(int cube_size);
+	void strategie(std::vector<Avion*> &v);
+	//Avion* trouverJoueurProche(std::vector<Avion*> &avions);
+	float dist(osg::Vec3f a,osg::Vec3f b);
 };
